@@ -24,3 +24,72 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Fix for input text visibility */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  color: black !important;
+  -webkit-text-fill-color: black !important;
+  opacity: 1 !important;
+  background-color: white !important;
+}
+
+input::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+select option {
+  color: black !important;
+  background-color: white !important;
+}
+
+/* Fix for autofilled inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: black !important;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+}
+
+/* Ensure all text is visible */
+p,
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  opacity: 1 !important;
+}
+
+/* Fix for font-mono text visibility */
+.font-mono {
+  color: black !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: black !important;
+}
+
+/* Demo credentials specific styling */
+.bg-yellow-100 {
+  background-color: rgb(254 249 195) !important;
+}
+
+.bg-yellow-100 strong,
+.bg-yellow-100 span,
+.bg-yellow-100 div,
+.bg-yellow-100 p {
+  color: black !important;
+  -webkit-text-fill-color: black !important;
+  opacity: 1 !important;
+}
