@@ -3,6 +3,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   Bell,
   Calendar,
@@ -51,17 +52,35 @@ export default function Notifications() {
   };
 
   const handleMarkAsRead = (notifId: string) => {
+    // First update localStorage
     markNotificationAsRead(notifId);
-    loadNotifications();
+    // Then update local state
+    if (filter === "unread") {
+      // If viewing unread only, remove the notification from the list
+      setNotifications((prev) => prev.filter((n) => n.id !== notifId));
+    } else {
+      // Otherwise, just mark it as read
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === notifId ? { ...n, isRead: true } : n))
+      );
+    }
   };
 
   const handleMarkAllAsRead = () => {
+    // First update localStorage for all unread notifications
     notifications.forEach((notif) => {
       if (!notif.isRead) {
         markNotificationAsRead(notif.id);
       }
     });
-    loadNotifications();
+    // Then update local state
+    if (filter === "unread") {
+      // If viewing unread only, clear the list
+      setNotifications([]);
+    } else {
+      // Otherwise, mark all as read
+      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+    }
   };
 
   const getNotificationIcon = (type: Notification["type"]) => {
@@ -179,8 +198,13 @@ export default function Notifications() {
             </div>
             {unreadCount > 0 && (
               <button
-                onClick={handleMarkAllAsRead}
-                className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium"
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleMarkAllAsRead();
+                }}
+                className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
               >
                 <CheckCircle className="h-5 w-5" />
                 <span>Mark all as read</span>
@@ -231,12 +255,23 @@ export default function Notifications() {
                                 <Clock className="h-3 w-3 mr-1" />
                                 {formatDateTime(notification.createdAt)}
                               </span>
+                              {notification.link && (
+                                <Link
+                                  href={notification.link}
+                                  className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+                                >
+                                  View Details →
+                                </Link>
+                              )}
                               {!notification.isRead && (
                                 <button
-                                  onClick={() =>
-                                    handleMarkAsRead(notification.id)
-                                  }
-                                  className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    handleMarkAsRead(notification.id);
+                                  }}
+                                  className="text-xs text-blue-600 hover:text-blue-700 font-medium cursor-pointer relative z-10"
                                 >
                                   Mark as read
                                 </button>

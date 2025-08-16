@@ -138,7 +138,7 @@ export default function Dashboard() {
             Welcome back, {user.name}!
           </h1>
           <p className="text-gray-600 mt-1">
-            Here's your learning dashboard overview
+            Here&apos;s your learning dashboard overview
           </p>
         </div>
 

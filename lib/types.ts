@@ -89,11 +89,15 @@ export interface Notification {
   type:
     | "session_request"
     | "session_confirmed"
+    | "session_cancelled"
+    | "session_reminder"
     | "new_message"
     | "new_review"
-    | "points_earned";
+    | "points_earned"
+    | "match_found";
   title: string;
   message: string;
+  link?: string;
   isRead: boolean;
   createdAt: string;
 }

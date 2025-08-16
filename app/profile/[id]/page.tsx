@@ -9,7 +9,6 @@ import {
   GraduationCap,
   DollarSign,
   Mail,
-  Phone,
   MapPin,
   Calendar,
   Clock,
@@ -136,16 +135,10 @@ export default function UserProfile() {
                       <Mail className="h-4 w-4" />
                       {profile.email}
                     </span>
-                    {profile.phone && (
-                      <span className="flex items-center gap-1">
-                        <Phone className="h-4 w-4" />
-                        {profile.phone}
-                      </span>
-                    )}
                   </div>
                 </div>
 
-                {currentUser.id !== profile.id && (
+                {currentUser?.id !== profile.id && (
                   <div className="flex gap-3">
                     <button
                       onClick={handleMessageUser}
@@ -300,7 +293,7 @@ export default function UserProfile() {
                         >
                           <Clock className="h-4 w-4" />
                           <span>
-                            {slot.day}: {slot.startTime} - {slot.endTime}
+                            {slot.dayOfWeek}: {slot.startTime} - {slot.endTime}
                           </span>
                         </div>
                       ))}
@@ -327,9 +320,9 @@ export default function UserProfile() {
                             className="px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-sm"
                           >
                             {getSubjectName(item.subjectId)}
-                            {item.level && (
+                            {item.proficiency && (
                               <span className="ml-1 text-xs opacity-75">
-                                ({item.level})
+                                ({item.proficiency})
                               </span>
                             )}
                           </div>

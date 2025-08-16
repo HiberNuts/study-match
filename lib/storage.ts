@@ -319,14 +319,13 @@ export const createNotification = (
 
 export const markNotificationAsRead = (id: string) => {
   const notifications = getNotifications();
-  const notif = notifications.find((n) => n.id === id);
-  if (notif) {
-    notif.isRead = true;
-    localStorage.setItem(
-      STORAGE_KEYS.NOTIFICATIONS,
-      JSON.stringify(notifications)
-    );
-  }
+  const updatedNotifications = notifications.map((n) =>
+    n.id === id ? { ...n, isRead: true } : n
+  );
+  localStorage.setItem(
+    STORAGE_KEYS.NOTIFICATIONS,
+    JSON.stringify(updatedNotifications)
+  );
 };
 
 // Matching functions
